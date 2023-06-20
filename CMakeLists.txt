@@ -8,7 +8,7 @@ project(quarternion_2_euler)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  tf_transformations
+  tf
   sensor_msgs
   std_msgs
 )
