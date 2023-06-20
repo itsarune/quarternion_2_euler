@@ -9,10 +9,15 @@ class quarternion_2_euler:
     def __init__(self):
         rospy.init_node('quarternion_2_euler', anonymous=True)
 
-        self.roll_pub = rospy.Publisher('/roll', Float64, queue_size=1)
-        self.pitch_pub = rospy.Publisher('/pitch', Float64, queue_size=1)
-        self.yaw_pub = rospy.Publisher('/yaw', Float64, queue_size=1)
-        rospy.Subscriber('/imu/data', Imu, self.convert_2_euler)
+        roll_topic = rospy.get_param("~roll_topic", "/roll")
+        pitch_topic = rospy.get_param("~pitch_topic", "/pitch")
+        yaw_topic = rospy.get_param("~yaw_topic", "/yaw")
+        imu_topic = rospy.get_param("~imu_topic", "/imu/data")
+
+        self.roll_pub = rospy.Publisher(roll_topic, Float64, queue_size=1)
+        self.pitch_pub = rospy.Publisher(pitch_topic, Float64, queue_size=1)
+        self.yaw_pub = rospy.Publisher(yaw_topic, Float64, queue_size=1)
+        rospy.Subscriber(imu_topic, Imu, self.convert_2_euler)
 
     def convert_2_euler(self, imu_msg):
         (roll, pitch, yaw) = tf.transformations.euler_from_quaternion([imu_msg.orientation.x, imu_msg.orientation.y, \
